@@ -100,7 +100,7 @@ card_number,card_name,type,cc,atk,acc,rarity,notes
 99,Life Preser.,support,8,--,100,2,source=StrategyWiki Cards; alias=Life Preserve; source_type=Item; power_effect=Life Recov.; gs_code=010255CE
 100,Medical Mac.,support,8,--,100,1,source=StrategyWiki Cards; alias=Medical Machine; source_type=Item; power_effect=P.Down fails; gs_code=010256CE
 101,Gravity Dev.,support,5,--,90,2,source=StrategyWiki Cards; alias=Gravity Device; source_type=Item; power_effect=Speed Down; gs_code=010257CE
-102,Ene.Absorber,support,9,--,85,2,source=StrategyWiki Cards; alias=Energy Absorber; source_type=Item; power_effect=Life Absorb; gs_code=010258CE
+102,Ene.Absorber,support,8,--,85,2,source=StrategyWiki Cards; alias=Energy Absorber; source_type=Item; power_effect=Life Absorb; gs_code=010258CE; cc corrected from in-game UI
 103,Sealed Ball,support,4,--,80,1,source=StrategyWiki Cards; source_type=Item; power_effect=Atk.Pow. Down; gs_code=010259CE
 104,Trunks Sword,support,4,--,100,1,source=StrategyWiki Cards; source_type=Item; power_effect=Strength Up; gs_code=01025aCE
 105,Dabura Spear,support,4,--,100,1,source=StrategyWiki Cards; source_type=Item; power_effect=Strength Up; gs_code=01025bCE

@@ -6,7 +6,7 @@ Candidate offsets are promoted only after copied-ROM patch tests. `tools/scan_ca
 
 | Offset | Bank | CPU Address | Evidence | Status |
 | --- | --- | --- | --- | --- |
-| `0x044315` | `0x11` | `0x4315` | Fixed-width scan candidate: record size `16`, field offsets `atk=12`, `acc=13`, `cc=15`; `299` matched numeric values across `125` rows; score `1165.544`. One `cc` mismatch remains for card 102 (`Ene.Absorber`), where CSV says `9` and the candidate byte is `8`. Patch validation changed card 13 (`S.Kamehameha`) `cc` from `23` to `22`, card 89 (`Guru`) `cc` from `6` to `5`, card 89 (`Guru`) `acc` from `100` to `95`, and card 13 (`S.Kamehameha`) `atk` from `30` to `31`. | Numeric visible fields `atk`, `acc`, and `cc` are patch-validated for this fixed-width layout. Type/category, nonnumeric effects, and the card 102 `cc` mismatch still need investigation. |
+| `0x044315` | `0x11` | `0x4315` | Fixed-width scan candidate: record size `16`, field offsets `atk=12`, `acc=13`, `cc=15`; `300` matched numeric values across `125` rows; score `1171.100`. Patch validation changed card 13 (`S.Kamehameha`) `cc` from `23` to `22`, card 89 (`Guru`) `cc` from `6` to `5`, card 89 (`Guru`) `acc` from `100` to `95`, and card 13 (`S.Kamehameha`) `atk` from `30` to `31`. | Numeric visible fields `atk`, `acc`, and `cc` are patch-validated for this fixed-width layout. Type/category, rarity, card IDs, and nonnumeric effects still need investigation. |
 
 ## Known Visible Card Stats
 
@@ -29,6 +29,10 @@ The CSV columns are:
 | `notes` | Manual source details, such as screen, deck, save state, language, or uncertainty. |
 
 Rows in this file may come from the game UI or a trusted guide transcription. Treat guide imports as lookup data only; they are not ROM table evidence until emulator validation traces them back to ROM reads. Placeholder or guessed values should be left blank or clearly marked in `notes` and will not be useful for candidate discovery.
+
+Corrections from in-game UI checks:
+
+- Card 102 (`Ene.Absorber`) has `cc=8`. The StrategyWiki import had `cc=9`, but the in-game UI and validated table byte both show `8`.
 
 ## Candidate Scanner
 
@@ -61,7 +65,7 @@ Latest scan result:
 
 - Fixed-width records: one deduplicated candidate family exported.
 - Parallel arrays: no candidates met the current conservative thresholds.
-- Top fixed-width candidate: `0x044315`, bank `0x11`, CPU `0x4315`, record size `16`, field offsets `atk=12`, `acc=13`, `cc=15`, matched value count `299`, matched row count `125`, score `1165.544`.
+- Top fixed-width candidate: `0x044315`, bank `0x11`, CPU `0x4315`, record size `16`, field offsets `atk=12`, `acc=13`, `cc=15`, matched value count `300`, matched row count `125`, score `1171.100`.
 - Top candidate surrounding window at `0x044305`: `10 00 05 00 00 00 00 00 00 00 00 04 00 00 B1 00 00 00 00 00 00 00 00 00 00 00 00 01 00 64 2F 00`.
 
 ## StrategyWiki Import
@@ -90,6 +94,19 @@ Validated observations:
 ## BGB Candidate Validation Workflow
 
 1. Use BGB read/watch breakpoints on the validated field bytes while opening the card UI. For switchable ROM banks, make sure bank `0x11` is mapped at `$4000-$7FFF` before trusting CPU addresses.
-2. Investigate the remaining card 102 (`Ene.Absorber`) `cc` mismatch: CSV says `9`, but the candidate byte is `8`.
-3. Identify neighboring record bytes for type/category, rarity, nonnumeric effects, and card IDs. Do not assume their meaning until patch tests or runtime reads confirm them.
+2. Identify neighboring record bytes for type/category, rarity, nonnumeric effects, and card IDs. Do not assume their meaning until patch tests or runtime reads confirm them.
+3. Start effect-mechanics traces from cards with clear UI effects, especially `Feint`, `Reading Ki`, `Lock On`, and `Dabura`.
 4. After runtime reads confirm the game uses this record block, promote the layout from patch-validated numeric fields to a fully documented ROM table.
+
+## Effect Mechanics Research
+
+The visible numeric table explains card display values, but it does not yet explain runtime effects. For example, card 120 (`Feint`) has `power_effect=Accuracy Up`; the open question is whether it modifies only later `beam`/`damage` cards or also effect/support cards such as card 94 (`Dabura`).
+
+Recommended workflow:
+
+1. Build controlled battle save states with the acting character holding `Feint`, one beam card, one damage card, and one support/effect card with finite accuracy such as `Dabura`.
+2. Record baseline hit rates or displayed accuracy without `Feint`.
+3. Use `Feint`, then test the next beam, damage, and support/effect cards separately.
+4. In BGB, set watchpoints around likely battle RAM values for the selected card's current accuracy and around ROM field offsets for card 120, card 94, and comparison cards.
+5. Compare `Feint` with similar accuracy-up cards: card 68 (`Lock On`) and card 119 (`Reading Ki`). If they share code paths, their effect records or runtime branches should converge.
+6. Document whether the modifier affects card classes, characters, only the next attack, the whole turn, or only the selected card.

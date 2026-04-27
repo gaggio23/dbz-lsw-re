@@ -17,7 +17,7 @@ The current work focuses on the 125 battle cards:
 - rarity
 - effect text and source notes
 
-The scanner uses this CSV to look for candidate ROM layouts. A candidate is not considered verified until a copied ROM is patched and the expected in-game UI change is observed in an emulator/debugger such as BGB.
+The scanner uses this CSV to look for candidate ROM layouts. The visible numeric card fields now have copied-ROM UI patch validation for the current fixed-width record layout. Runtime read/watchpoint validation is still needed before neighboring bytes such as type/category, rarity, IDs, and nonnumeric effects are considered documented.
 
 Character statistics are part of the project purpose, but they have not been extracted into a verified data file yet. When added, they should follow the same rules: small text/CSV/JSON source files, conservative candidate scans, and emulator validation before claiming a ROM location is real.
 
@@ -112,7 +112,7 @@ make scan-card-tables
 
 [tools/patch_card_value.py](tools/patch_card_value.py) patches exactly one byte in a copied ROM under `patched/`. It refuses to overwrite the original ROM and prints the old value, new value, SHA1, and SHA256 of the patched ROM.
 
-Example for the current recommended validation card, `S.Kamehameha` card 13:
+Historical validation example for `S.Kamehameha` card 13:
 
 ```sh
 python3 tools/patch_card_value.py baserom.gbc 0x0443E4 0x16
@@ -140,7 +140,7 @@ make scan-card-tables ROM=/path/to/private/local/rom.gbc
 
 The latest scanner run found one deduplicated fixed-width candidate family and no parallel-array candidates meeting the current thresholds.
 
-Top candidate:
+Validated numeric layout:
 
 ```text
 candidate_type: fixed_width_records
@@ -149,38 +149,53 @@ bank: 0x11
 cpu_address: 0x4315
 record_size: 16
 field_offsets: atk=12, acc=13, cc=15
-matched_value_count: 299
+matched_value_count: 300
 matched_row_count: 125
-score: 1165.544
+score: 1171.100
 ```
 
-This is not verified. It is a strong candidate because many visible numeric card values line up at consistent offsets, but only BGB/runtime patch validation can prove the game uses these bytes.
+Patch validation performed so far:
 
-## Recommended Validation Step
+```text
+cc  - card 13 S.Kamehameha: 23  -> 22
+cc  - card 89 Guru:           6  -> 5
+acc - card 89 Guru:         100  -> 95
+atk - card 13 S.Kamehameha: 30  -> 31
+```
 
-Use a card that is already available in the save state. Current recommendation:
+This validates the visible numeric fields for the fixed-width layout. It does not yet document the meaning of neighboring bytes or runtime effect logic.
 
-- card: `S.Kamehameha`
-- card number: `13`
-- field: `cc`
-- visible old value: `23`
-- test new value: `22`
-- candidate file offset: `0x0443E4`
-- candidate bank/CPU address: bank `0x11`, CPU `0x43E4`
+Card 102 (`Ene.Absorber`) was corrected from `cc=9` to `cc=8` after in-game UI confirmation. The StrategyWiki source row appears to be wrong for that value.
 
-Create the patched ROM:
+## Next Research: Card Effects
+
+The next goal is to understand nonnumeric card effects. For example, card 120 (`Feint`) has `power_effect=Accuracy Up`, but we still need to determine the exact target and duration:
+
+- Does it increase accuracy only for later `beam` and `damage` cards?
+- Does it also apply to support/effect cards with finite accuracy, such as card 94 (`Dabura`)?
+- Is the effect consumed by the next card only, the next attack only, or a whole turn/state?
+- Does it share behavior with card 68 (`Lock On`) and card 119 (`Reading Ki`)?
+
+Recommended approach:
+
+1. Build controlled BGB save states with `Feint`, a beam card, a damage card, and a finite-accuracy support card such as `Dabura`.
+2. Record baseline displayed accuracy and hit behavior without `Feint`.
+3. Use `Feint`, then test each card class separately.
+4. Watch battle RAM for current-card accuracy or status modifiers while setting ROM read/watchpoints on the validated card records.
+5. Compare `Feint`, `Lock On`, and `Reading Ki` to see whether they share effect IDs, code paths, or RAM modifier state.
+
+## Historical Patch Examples
+
+These copied-ROM patches validated the numeric table. The patched ROMs are local-only and ignored by Git.
 
 ```sh
-python3 tools/patch_card_value.py baserom.gbc 0x0443E4 0x16
+python3 tools/patch_card_value.py baserom.gbc 0x0443E4 0x16  # S.Kamehameha cc 23 -> 22
+python3 tools/patch_card_value.py baserom.gbc 0x0448A4 0x05  # Guru cc 6 -> 5
+python3 tools/patch_card_value.py baserom.gbc 0x0448A2 0x5F  # Guru acc 100 -> 95
+python3 tools/patch_card_value.py baserom.gbc 0x0443E1 0x1F  # S.Kamehameha atk 30 -> 31
 ```
 
-Then compare in BGB:
-
-1. Load the original ROM and confirm card 13 shows CC `23`.
-2. Load the patched ROM from `patched/`.
-3. Open the same card UI and check whether only card 13's CC changes to `22`.
-4. If it does not change, the candidate is not verified.
-5. If it changes, test another field or adjacent card before promoting the layout to verified.
+Next validation work should focus on runtime reads and effect semantics, not more display-only `cc`/`atk`/`acc` patches.
 
 ## Data Safety
 
