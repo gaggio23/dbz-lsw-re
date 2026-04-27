@@ -18,15 +18,19 @@ DEFAULT_KNOWN_CARDS = Path("data/raw/known_cards_manual.csv")
 DEFAULT_OUTPUT = Path("data/candidates/card_table_candidates.csv")
 FIELD_NAMES = ("cc", "atk", "acc")
 FIELD_ORDERS = tuple(itertools.permutations(FIELD_NAMES))
+CARD_TYPES = {"command", "damage", "beam", "support", "defense"}
+INFINITE_ACC = "--"
 
 
 @dataclass(frozen=True)
 class KnownCard:
+    card_number: int
     card_name: str
     card_type: str
     cc: int
     atk: int
     acc: int
+    rarity: int
     notes: str
 
     def values_by_field(self) -> dict[str, int]:
@@ -100,6 +104,42 @@ def parse_int(raw_value: str) -> int | None:
     return parsed if parsed >= 0 else None
 
 
+def require_int_in_range(field_name: str, raw_value: str, minimum: int, maximum: int) -> tuple[int | None, str | None]:
+    value = parse_int(raw_value)
+    if value is None:
+        return None, f"{field_name} must be an integer from {minimum} to {maximum}"
+    if not minimum <= value <= maximum:
+        return None, f"{field_name} must be from {minimum} to {maximum}"
+    return value, None
+
+
+def parse_card_type(raw_value: str) -> tuple[str | None, str | None]:
+    card_type = raw_value.strip().lower()
+    if card_type not in CARD_TYPES:
+        allowed = ", ".join(sorted(CARD_TYPES))
+        return None, f"type must be one of: {allowed}"
+    return card_type, None
+
+
+def parse_accuracy(raw_value: str) -> tuple[int | None, str | None, bool]:
+    value = raw_value.strip()
+    if value == INFINITE_ACC:
+        return None, None, True
+
+    acc, error = require_int_in_range("acc", value, 20, 100)
+    if error:
+        return None, error, False
+    if acc is None or acc % 5 != 0:
+        return None, "acc must be a multiple of 5 from 20 to 100, or --", False
+    return acc, None, False
+
+
+def format_row_errors(line_number: int, card_name: str, errors: Iterable[str]) -> str:
+    label = card_name.strip() or "<unnamed>"
+    joined = "; ".join(errors)
+    return f"line {line_number}: skipped {label}; {joined}"
+
+
 def load_known_cards(path: Path) -> tuple[list[KnownCard], list[str]]:
     warnings: list[str] = []
     if not path.exists():
@@ -107,7 +147,9 @@ def load_known_cards(path: Path) -> tuple[list[KnownCard], list[str]]:
 
     with path.open(newline="", encoding="utf-8") as csv_file:
         reader = csv.DictReader(csv_file)
-        missing_columns = set(["card_name", "type", "cc", "atk", "acc", "notes"]) - set(reader.fieldnames or [])
+        missing_columns = set(["card_number", "card_name", "type", "cc", "atk", "acc", "rarity", "notes"]) - set(
+            reader.fieldnames or []
+        )
         if missing_columns:
             joined = ", ".join(sorted(missing_columns))
             return [], [f"known card CSV is missing required columns: {joined}"]
@@ -117,21 +159,49 @@ def load_known_cards(path: Path) -> tuple[list[KnownCard], list[str]]:
             if not row or not any((value or "").strip() for value in row.values()):
                 continue
 
-            values = {field: parse_int(row.get(field, "")) for field in FIELD_NAMES}
-            if any(values[field] is None for field in FIELD_NAMES):
+            card_name = (row.get("card_name") or "").strip()
+            card_number, card_number_error = require_int_in_range("card_number", row.get("card_number", ""), 1, 125)
+            card_type, card_type_error = parse_card_type(row.get("type", ""))
+            cc, cc_error = require_int_in_range("cc", row.get("cc", ""), 0, 33)
+            atk = parse_int(row.get("atk", ""))
+            acc, acc_error, has_infinite_acc = parse_accuracy(row.get("acc", ""))
+            rarity, rarity_error = require_int_in_range("rarity", row.get("rarity", ""), 1, 3)
+
+            errors = [
+                error
+                for error in [
+                    card_number_error,
+                    "card_name must not be empty" if not card_name else None,
+                    card_type_error,
+                    cc_error,
+                    "atk must be a non-negative integer" if atk is None else None,
+                    acc_error,
+                    rarity_error,
+                ]
+                if error
+            ]
+            if errors:
+                warnings.append(format_row_errors(line_number, card_name, errors))
+                continue
+            if has_infinite_acc:
                 warnings.append(
-                    f"line {line_number}: skipped {row.get('card_name', '').strip() or '<unnamed>'}; "
-                    "cc/atk/acc must all be numeric"
+                    format_row_errors(
+                        line_number,
+                        card_name,
+                        [f"acc={INFINITE_ACC} is valid card data but cannot be used by this cc/atk/acc scanner"],
+                    )
                 )
                 continue
 
             cards.append(
                 KnownCard(
-                    card_name=(row.get("card_name") or "").strip(),
-                    card_type=(row.get("type") or "").strip(),
-                    cc=values["cc"] or 0,
-                    atk=values["atk"] or 0,
-                    acc=values["acc"] or 0,
+                    card_number=card_number or 0,
+                    card_name=card_name,
+                    card_type=card_type or "",
+                    cc=cc or 0,
+                    atk=atk or 0,
+                    acc=acc or 0,
+                    rarity=rarity or 0,
                     notes=(row.get("notes") or "").strip(),
                 )
             )
@@ -249,11 +319,13 @@ def write_candidates(path: Path, matches: Iterable[Match]) -> None:
         writer = csv.DictWriter(
             csv_file,
             fieldnames=[
+                "card_number",
                 "card_name",
                 "type",
                 "cc",
                 "atk",
                 "acc",
+                "rarity",
                 "file_offset",
                 "bank",
                 "cpu_address",
@@ -271,11 +343,13 @@ def write_candidates(path: Path, matches: Iterable[Match]) -> None:
             address = file_offset_to_gb_addr(match.offset)
             writer.writerow(
                 {
+                    "card_number": match.card.card_number,
                     "card_name": match.card.card_name,
                     "type": match.card.card_type,
                     "cc": match.card.cc,
                     "atk": match.card.atk,
                     "acc": match.card.acc,
+                    "rarity": match.card.rarity,
                     "file_offset": f"0x{match.offset:06X}",
                     "bank": f"0x{address.bank:02X}",
                     "cpu_address": f"0x{address.cpu_address:04X}",
@@ -336,8 +410,11 @@ def main() -> int:
         print(f"Wrote empty candidate CSV: {args.output}")
         print()
         print("Collect these values from the game UI before using this scanner:")
-        print("  card_name,type,cc,atk,acc,notes")
-        print("Use decimal numbers for cc/atk/acc and leave notes for source details such as save state, deck, or screen.")
+        print("  card_number,card_name,type,cc,atk,acc,rarity,notes")
+        print(
+            "Use decimal numbers for card_number/cc/atk/rarity, one of the known type values, "
+            "and numeric acc values for scanner input."
+        )
         return 2
 
     matches = find_matches(data, cards, args.max_gap, args.context)

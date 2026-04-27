@@ -18,11 +18,13 @@ The CSV columns are:
 
 | Column | Meaning |
 | --- | --- |
-| `card_name` | Card name as shown in the game UI. |
-| `type` | Card type/category as shown in the game UI, if visible. |
-| `cc` | Visible card cost as a decimal number. |
-| `atk` | Visible attack value as a decimal number. |
-| `acc` | Visible accuracy value as a decimal number. |
+| `card_number` | Integer card number from `1` to `125`. |
+| `card_name` | Card name as shown in the game UI or card image. Names are variable-length strings and may contain spaces. |
+| `type` | Lowercase card type enum: `command`, `damage`, `beam`, `support`, or `defense`. |
+| `cc` | Visible card cost as an integer from `0` to `33`. Command cards may use `0`. |
+| `atk` | Visible attack value as a non-negative integer. |
+| `acc` | Visible accuracy as an integer multiple of `5` from `20` to `100`, or `--` when the card image shows no accuracy value. Treat `--` as infinite precision. |
+| `rarity` | Numeric rarity star count from `1` to `3`; more stars means rarer. This is the value shown after `R.` in card images. |
 | `notes` | Manual source details, such as screen, deck, save state, language, or uncertainty. |
 
 Rows in this file must be manually verified from the game UI before use. Placeholder or guessed values should be left blank or clearly marked in `notes` and will not be useful for candidate discovery.
@@ -35,7 +37,7 @@ Run:
 python3 tools/scan_card_tables.py baserom.gbc
 ```
 
-The scanner loads `data/raw/known_cards_manual.csv`, keeps only rows where `cc`, `atk`, and `acc` are numeric, and searches for compact byte patterns involving those values. It tries all visible field orders and allows small unknown gaps between fields because records may include type, flags, IDs, or padding between visible stats. Candidate output is written to `data/candidates/card_table_candidates.csv`.
+The scanner loads `data/raw/known_cards_manual.csv`, validates the schema constraints above, keeps only rows where `cc`, `atk`, and `acc` are numeric, and searches for compact byte patterns involving those values. Rows with `acc` set to `--` are valid card data, but they are skipped by the current candidate scanner because there is no finite accuracy byte pattern to search for. It tries all visible field orders and allows small unknown gaps between fields because records may include type, flags, IDs, or padding between visible stats. Candidate output is written to `data/candidates/card_table_candidates.csv`.
 
 The scanner is intentionally conservative. A candidate means only that nearby bytes match one manually observed card's visible values under one possible encoding/order/gap model.
 

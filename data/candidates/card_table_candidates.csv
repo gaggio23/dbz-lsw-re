@@ -1,1 +1,1 @@
-card_name,type,cc,atk,acc,file_offset,bank,cpu_address,field_order,field_encodings,gaps,matched_bytes,surrounding_start,surrounding_bytes,notes
+card_number,card_name,type,cc,atk,acc,rarity,file_offset,bank,cpu_address,field_order,field_encodings,gaps,matched_bytes,surrounding_start,surrounding_bytes,notes
