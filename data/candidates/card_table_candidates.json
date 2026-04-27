@@ -1,0 +1,42 @@
+{
+  "fixed_width_records": [
+    {
+      "candidate_type": "fixed_width_records",
+      "file_offset": 279317,
+      "bank": 17,
+      "cpu_address": 17173,
+      "record_size": 16,
+      "field_offsets": {
+        "cc": 15,
+        "atk": 12,
+        "acc": 13
+      },
+      "matched_fields": [
+        {
+          "field": "cc",
+          "field_offset": 15,
+          "match_count": 124,
+          "weighted_score": 560.784
+        },
+        {
+          "field": "atk",
+          "field_offset": 12,
+          "match_count": 63,
+          "weighted_score": 211.377
+        },
+        {
+          "field": "acc",
+          "field_offset": 13,
+          "match_count": 112,
+          "weighted_score": 278.833
+        }
+      ],
+      "matched_value_count": 299,
+      "matched_row_count": 125,
+      "score": 1165.544,
+      "surrounding_start": 279301,
+      "surrounding_bytes": "10 00 05 00 00 00 00 00 00 00 00 04 00 00 B1 00 00 00 00 00 00 00 00 00 00 00 00 01 00 64 2F 00"
+    }
+  ],
+  "parallel_arrays": []
+}

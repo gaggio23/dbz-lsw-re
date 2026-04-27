@@ -1,1 +1,126 @@
 card_number,card_name,type,cc,atk,acc,rarity,notes
+1,3 stage atk.,command,0,--,100,1,source=StrategyWiki Cards; alias=3 Stage Attack; source_type=Command; power_effect=--; gs_code=0102F3CD
+2,4 stage atk.,command,0,--,100,1,source=StrategyWiki Cards; alias=4 Stage Attack; source_type=Command; power_effect=--; gs_code=0102F4CD
+3,5 stage atk.,command,0,--,100,1,source=StrategyWiki Cards; alias=5 Stage Attack; source_type=Command; power_effect=--; gs_code=0102F5CD
+4,6 stage atk.,command,0,--,100,2,source=StrategyWiki Cards; alias=6 Stage Attack; source_type=Command; power_effect=--; gs_code=0102F6CD
+5,Cont.Punch,damage,10,10,100,1,source=StrategyWiki Cards; alias=Continuous Punch; source_type=Damage; power_effect=10; gs_code=0102F7CD
+6,Cont.Kick,damage,15,20,80,1,source=StrategyWiki Cards; alias=Continuous Kick; source_type=Damage; power_effect=20; gs_code=0102F8CD
+7,Energy Wave,beam,12,15,90,1,source=StrategyWiki Cards; source_type=Beam; power_effect=15; gs_code=0102F9CD
+8,Energy Bomb,beam,10,10,100,1,source=StrategyWiki Cards; source_type=Beam; power_effect=10; gs_code=0102FACD
+9,Special Card,special,0,--,--,3,source=StrategyWiki Cards; source_type=Special; power_effect=Autograph; gs_code=0102FBCD
+10,Masenko,beam,18,25,95,1,source=StrategyWiki Cards; source_type=Beam; power_effect=25; gs_code=0102FCCD
+11,Dunk Shot,damage,19,25,100,1,source=StrategyWiki Cards; source_type=Damage; power_effect=25; gs_code=0102FDCD
+12,Kamehameha,beam,16,20,100,1,source=StrategyWiki Cards; source_type=Beam; power_effect=20; gs_code=0102FECD
+13,S.Kamehameha,beam,23,30,100,2,source=StrategyWiki Cards; alias=Super Kamehameha; source_type=Beam; power_effect=30; gs_code=0102FFCD
+14,F.Kamehameha,beam,33,60,100,3,source=StrategyWiki Cards; alias=Father-Son Kamehameha; source_type=Beam; power_effect=60; gs_code=010200CE
+15,Sonic Kick,damage,18,25,100,1,source=StrategyWiki Cards; source_type=Damage; power_effect=25; gs_code=010201CE
+16,Resurrection,support,10,--,100,2,source=StrategyWiki Cards; source_type=Item; power_effect=--; gs_code=010202CE
+17,S.Beam Can.,beam,21,30,75,2,source=StrategyWiki Cards; alias=Special Beam Cannon; source_type=Beam; power_effect=30; gs_code=010203CE
+18,F.Lightbomb,beam,25,35,100,2,source=StrategyWiki Cards; source_type=Beam; power_effect=35; gs_code=010204CE
+19,Taiyoken,defense,5,--,--,1,source=StrategyWiki Cards; source_type=Avoid; power_effect=Avoid Damage; gs_code=010205CE
+20,Misty KiWave,beam,23,30,100,2,source=StrategyWiki Cards; alias=Misty Ki Wave; source_type=Beam; power_effect=30; gs_code=010206CE
+21,Destruct-Disk,beam,18,25,80,1,source=StrategyWiki Cards; alias=Destructo-Disk; source_type=Beam; power_effect=25; gs_code=010207CE
+22,S.Destruc-D.,beam,28,40,90,2,source=StrategyWiki Cards; alias=Super Destructo-Disk; source_type=Beam; power_effect=40; gs_code=010208CE
+23,Kaio Ken,support,10,--,100,1,source=StrategyWiki Cards; source_type=Item; power_effect=Double Atk.; gs_code=010209CE
+24,Spirit Bomb,beam,25,35,90,2,source=StrategyWiki Cards; source_type=Beam; power_effect=35; gs_code=01020aCE
+25,Solid Shot,damage,19,25,100,1,source=StrategyWiki Cards; source_type=Damage; power_effect=25; gs_code=01020bCE
+26,Teleport.,defense,5,--,--,2,source=StrategyWiki Cards; alias=Teleportation; source_type=Avoid; power_effect=Avoid Beam; gs_code=01020cCE
+27,Sup.Saiyan-2,support,7,--,100,1,source=StrategyWiki Cards; alias=Super Saiyan 2; source_type=Item; power_effect=Ki Up; gs_code=01020dCE
+28,Sup.Saiyan-3,support,7,--,100,1,source=StrategyWiki Cards; alias=Super Saiyan 3; source_type=Item; power_effect=Strength Up; gs_code=01020eCE
+29,Tail,damage,26,35,100,2,source=StrategyWiki Cards; source_type=Damage; power_effect=35; gs_code=01020fCE
+30,Galick-Ho,beam,17,20,100,1,source=StrategyWiki Cards; source_type=Beam; power_effect=20; gs_code=010210CE
+31,Big Bang Atk,beam,23,30,90,2,source=StrategyWiki Cards; alias=Big Bang Attack; source_type=Beam; power_effect=30; gs_code=010211CE
+32,Final Flash,beam,28,40,95,2,source=StrategyWiki Cards; source_type=Beam; power_effect=40; gs_code=010212CE
+33,Suicide,beam,31,70,90,3,source=StrategyWiki Cards; source_type=Beam; power_effect=70; gs_code=010213CE
+34,Rising Kick,damage,24,30,100,1,source=StrategyWiki Cards; source_type=Damage; power_effect=30; gs_code=010214CE
+35,Burning Atk.,beam,19,25,100,1,source=StrategyWiki Cards; alias=Burning Attack; source_type=Beam; power_effect=25; gs_code=010215CE
+36,Fin.Buster,beam,26,35,100,2,source=StrategyWiki Cards; alias=Finish Buster; source_type=Beam; power_effect=35; gs_code=010216CE
+37,Flash Punch,damage,19,25,100,1,source=StrategyWiki Cards; source_type=Damage; power_effect=25; gs_code=010217CE
+38,Kamekameha,beam,18,25,90,1,source=StrategyWiki Cards; source_type=Beam; power_effect=25; gs_code=010218CE
+39,Galactica D.,beam,10,15,100,1,source=StrategyWiki Cards; alias=Galactica Donut; source_type=Beam; power_effect=15; gs_code=010219CE
+40,S.G.K.Atk.,beam,28,40,80,2,source=StrategyWiki Cards; alias=Super Ghost Kamikaze Attack; source_type=Beam; power_effect=40; gs_code=01021aCE
+41,V-ball Crash,damage,33,60,100,3,source=StrategyWiki Cards; source_type=Damage; power_effect=60; gs_code=01021bCE
+42,Kiai,support,8,--,95,1,source=StrategyWiki Cards; source_type=Item; power_effect=Guard Down; gs_code=01021cCE
+43,Atomic Break,damage,20,25,100,1,source=StrategyWiki Cards; source_type=Damage; power_effect=25; gs_code=01021dCE
+44,Flash.Sword,beam,26,35,100,2,source=StrategyWiki Cards; alias=Flash Sword; source_type=Beam; power_effect=35; gs_code=01021eCE
+45,Barrier,defense,5,--,--,1,source=StrategyWiki Cards; source_type=Avoid; power_effect=Avoid Beam; gs_code=01021fCE
+46,N.Slasher,damage,24,30,100,2,source=StrategyWiki Cards; alias=Nappa Slasher; source_type=Damage; power_effect=30; gs_code=010220CE
+47,KiBlast Bomb,beam,16,20,90,1,source=StrategyWiki Cards; alias=Ki Blast Bomb; source_type=Beam; power_effect=20; gs_code=010221CE
+48,Lightning C.,beam,23,30,90,2,source=StrategyWiki Cards; alias=Lightning Cannon; source_type=Beam; power_effect=30; gs_code=010222CE
+49,Telekinesis,beam,14,20,90,1,source=StrategyWiki Cards; source_type=Beam; power_effect=20; gs_code=010223CE
+50,M.Soundwave,beam,10,15,100,1,source=StrategyWiki Cards; alias=Mystic Soundwave; source_type=Beam; power_effect=15; gs_code=010224CE
+51,Paralysis,support,5,--,95,1,source=StrategyWiki Cards; source_type=Item; power_effect=Speed Down; gs_code=010225CE
+52,Time Freeze,defense,1,--,--,2,source=StrategyWiki Cards; source_type=Avoid; power_effect=Comm. fails; gs_code=010226CE
+53,Breath,defense,5,--,--,1,source=StrategyWiki Cards; source_type=Avoid; power_effect=Avoid Beam; gs_code=010227CE
+54,Eraser Can.,beam,18,25,90,1,source=StrategyWiki Cards; alias=Eraser Cannon; source_type=Beam; power_effect=25; gs_code=010228CE
+55,R.F.B.Atk.,damage,24,35,50,2,source=StrategyWiki Cards; alias=Recoome Fighting Bomber Attack; source_type=Damage; power_effect=35; gs_code=010229CE
+56,Crasher Ball,beam,19,25,100,1,source=StrategyWiki Cards; source_type=Beam; power_effect=25; gs_code=01022aCE
+57,Purple Comet,beam,28,40,95,2,source=StrategyWiki Cards; source_type=Beam; power_effect=40; gs_code=01022bCE
+58,P.Comet Z,damage,31,50,100,3,source=StrategyWiki Cards; alias=Purple Comet Z-Crash; source_type=Damage; power_effect=50; gs_code=01022cCE
+59,Speed Up,support,7,--,100,1,source=StrategyWiki Cards; source_type=Item; power_effect=Speed Up; gs_code=01022dCE
+60,Mach Attack,damage,17,20,100,1,source=StrategyWiki Cards; source_type=Damage; power_effect=20; gs_code=01022eCE
+61,Dynami.Punch,damage,20,25,100,1,source=StrategyWiki Cards; alias=Dynamite Punch; source_type=Damage; power_effect=25; gs_code=01022fCE
+62,Body Change,beam,20,--,80,2,source=StrategyWiki Cards; source_type=Beam; power_effect=--; gs_code=010230CE
+63,Finger Beam,beam,10,15,100,1,source=StrategyWiki Cards; source_type=Beam; power_effect=15; gs_code=010231CE
+64,Super E-Ball,beam,23,30,95,2,source=StrategyWiki Cards; source_type=Beam; power_effect=30; gs_code=010232CE
+65,Grand Wave,beam,18,25,90,1,source=StrategyWiki Cards; source_type=Beam; power_effect=25; gs_code=010233CE
+66,S.Dash Elbow,damage,23,30,90,2,source=StrategyWiki Cards; alias=Super Dash Elbow; source_type=Damage; power_effect=30; gs_code=010234CE
+67,Eye Beam,beam,17,20,100,1,source=StrategyWiki Cards; source_type=Beam; power_effect=20; gs_code=010235CE
+68,Lock On,support,4,--,100,1,source=StrategyWiki Cards; source_type=Item; power_effect=Accuracy Up; gs_code=010236CE
+69,Rocket Punch,damage,18,30,30,1,source=StrategyWiki Cards; source_type=Damage; power_effect=30; gs_code=010237CE
+70,Hell Flash,beam,26,40,70,2,source=StrategyWiki Cards; alias=Hell's Flash; source_type=Beam; power_effect=40; gs_code=010238CE
+71,Crazy Rush,damage,23,30,90,2,source=StrategyWiki Cards; source_type=Damage; power_effect=30; gs_code=010239CE
+72,Energy Slash,beam,18,25,100,1,source=StrategyWiki Cards; source_type=Beam; power_effect=25; gs_code=01023aCE
+73,Energy Slice,beam,15,20,90,1,source=StrategyWiki Cards; source_type=Beam; power_effect=20; gs_code=01023bCE
+74,Attack No. 18,damage,19,25,100,1,source=StrategyWiki Cards; source_type=Damage; power_effect=25; gs_code=01023cCE
+75,Life Absorb,damage,15,10,90,2,source=StrategyWiki Cards; source_type=Damage; power_effect=10; gs_code=01023dCE
+76,Energy Absorb,defense,5,--,--,2,source=StrategyWiki Cards; source_type=Avoid; power_effect=Beam Absorb; gs_code=01023eCE
+77,Cell Combo,damage,20,25,100,1,source=StrategyWiki Cards; source_type=Damage; power_effect=25; gs_code=01023fCE
+78,Step Up Atk.,damage,19,25,100,1,source=StrategyWiki Cards; alias=Step Up Attack; source_type=Damage; power_effect=25; gs_code=010240CE
+79,Flesh Guard,support,9,--,100,1,source=StrategyWiki Cards; source_type=Item; power_effect=Guard Pow Up; gs_code=010241CE
+80,Potbelly Atk,damage,16,20,100,2,source=StrategyWiki Cards; alias=Potbelly Attack; source_type=Damage; power_effect=20; gs_code=010242CE
+81,Crasher Buu,damage,20,25,100,1,source=StrategyWiki Cards; source_type=Damage; power_effect=25; gs_code=010243CE
+82,Sweet Beam,beam,19,25,90,1,source=StrategyWiki Cards; source_type=Beam; power_effect=25; gs_code=010244CE
+83,Bulma,support,3,--,95,1,source=StrategyWiki Cards; source_type=Item; power_effect=Stare Down; gs_code=010245CE
+84,Chaiotzu,support,3,--,60,1,source=StrategyWiki Cards; source_type=Item; power_effect=Speed Down; gs_code=010246CE
+85,Tien,support,6,--,80,2,source=StrategyWiki Cards; source_type=Item; power_effect=Knock Down (20); gs_code=010247CE
+86,Yajirobe,support,4,--,100,1,source=StrategyWiki Cards; source_type=Item; power_effect=Knock Down (10); gs_code=010248CE
+87,Kaio,support,3,--,90,1,source=StrategyWiki Cards; source_type=Item; power_effect=Ki Down; gs_code=010249CE
+88,Dende,support,12,--,100,3,source=StrategyWiki Cards; source_type=Item; power_effect=Life Recov.; gs_code=01024aCE
+89,Guru,support,6,--,100,2,source=StrategyWiki Cards; source_type=Item; power_effect=Atk.Power Up; gs_code=01024bCE
+90,Hercule,support,3,--,100,1,source=StrategyWiki Cards; source_type=Item; power_effect=Knock Down; gs_code=01024cCE
+91,Supreme Kai,support,4,--,80,1,source=StrategyWiki Cards; source_type=Item; power_effect=Speed Down; gs_code=01024dCE
+92,Kibito,support,12,--,100,3,source=StrategyWiki Cards; source_type=Item; power_effect=Beam fails; gs_code=01024eCE
+93,Babidi,support,6,--,100,1,source=StrategyWiki Cards; source_type=Item; power_effect=Cancel param; gs_code=01024fCE
+94,Dabura,support,12,--,20,2,source=StrategyWiki Cards; source_type=Item; power_effect=Fossilizing; gs_code=010250CE
+95,Yakon,support,4,--,100,2,source=StrategyWiki Cards; source_type=Item; power_effect=Power fails; gs_code=010251CE
+96,Scouter,support,5,--,90,1,source=StrategyWiki Cards; source_type=Item; power_effect=Guard Down; gs_code=010252CE
+97,Caps. Fridge,support,1,--,100,2,source=StrategyWiki Cards; alias=Capsule Fridge; source_type=Item; power_effect=Cost Recov.; gs_code=010253CE
+98,Stop Device,support,21,--,--,1,source=StrategyWiki Cards; source_type=Item; power_effect=Stop Android; gs_code=010254CE
+99,Life Preser.,support,8,--,100,2,source=StrategyWiki Cards; alias=Life Preserve; source_type=Item; power_effect=Life Recov.; gs_code=010255CE
+100,Medical Mac.,support,8,--,100,1,source=StrategyWiki Cards; alias=Medical Machine; source_type=Item; power_effect=P.Down fails; gs_code=010256CE
+101,Gravity Dev.,support,5,--,90,2,source=StrategyWiki Cards; alias=Gravity Device; source_type=Item; power_effect=Speed Down; gs_code=010257CE
+102,Ene.Absorber,support,9,--,85,2,source=StrategyWiki Cards; alias=Energy Absorber; source_type=Item; power_effect=Life Absorb; gs_code=010258CE
+103,Sealed Ball,support,4,--,80,1,source=StrategyWiki Cards; source_type=Item; power_effect=Atk.Pow. Down; gs_code=010259CE
+104,Trunks Sword,support,4,--,100,1,source=StrategyWiki Cards; source_type=Item; power_effect=Strength Up; gs_code=01025aCE
+105,Dabura Spear,support,4,--,100,1,source=StrategyWiki Cards; source_type=Item; power_effect=Strength Up; gs_code=01025bCE
+106,Light Vest,support,6,--,100,1,source=StrategyWiki Cards; source_type=Item; power_effect=Speed Up; gs_code=01025cCE
+107,Btl. Jacket,support,7,--,100,1,source=StrategyWiki Cards; alias=Battle Jacket; source_type=Item; power_effect=Guard Pow Up; gs_code=01025dCE
+108,New-B Jacket,support,6,--,100,2,source=StrategyWiki Cards; alias=New Battle Jacket; source_type=Item; power_effect=Guard Pow Up; gs_code=01025eCE
+109,Sunglasses,support,3,--,100,1,source=StrategyWiki Cards; source_type=Item; power_effect=Taiyo. fails; gs_code=01025fCE
+110,Gamebomb,support,10,25,90,2,source=StrategyWiki Cards; source_type=Item; power_effect=25; gs_code=010260CE
+111,Champ.Belt,support,12,--,100,3,source=StrategyWiki Cards; alias=Champion Belt; source_type=Item; power_effect=Damage fails; gs_code=010261CE
+112,H's Choco.,support,12,30,80,2,source=StrategyWiki Cards; alias=H's Chocolate; source_type=Item; power_effect=30; gs_code=010262CE
+113,Heart Virus,support,5,--,95,2,source=StrategyWiki Cards; source_type=Item; power_effect=Atk.Pow. Down; gs_code=010263CE
+114,Heart Medi.,support,8,--,100,2,source=StrategyWiki Cards; alias=Heart Medicine; source_type=Item; power_effect=P.Down fails; gs_code=010264CE
+115,Sandglass,support,5,--,100,2,source=StrategyWiki Cards; source_type=Item; power_effect=Cancel S.E.; gs_code=010265CE
+116,Naughty Book,support,6,--,100,3,source=StrategyWiki Cards; source_type=Item; power_effect=???; gs_code=010266CE
+117,Full Spirit,support,4,--,100,1,source=StrategyWiki Cards; source_type=Item; power_effect=Ki Up; gs_code=010267CE
+118,Afterimage,support,4,--,100,1,source=StrategyWiki Cards; source_type=Item; power_effect=Avoid Lv.Up; gs_code=010268CE
+119,Reading Ki,support,4,--,100,1,source=StrategyWiki Cards; source_type=Item; power_effect=Accuracy Up; gs_code=010269CE
+120,Feint,support,4,--,100,1,source=StrategyWiki Cards; source_type=Item; power_effect=Accuracy Up; gs_code=01026aCE
+121,Endurance,defense,7,--,--,2,source=StrategyWiki Cards; source_type=Avoid; power_effect=Guard; gs_code=01026bCE
+122,Telepathy,defense,1,--,--,1,source=StrategyWiki Cards; source_type=Avoid; power_effect=Comm. fails; gs_code=01026cCE
+123,Foresight,defense,1,--,--,1,source=StrategyWiki Cards; source_type=Avoid; power_effect=Comm. fails; gs_code=01026dCE
+124,Shockwave,defense,5,--,--,1,source=StrategyWiki Cards; source_type=Avoid; power_effect=Avoid Damage; gs_code=01026eCE
+125,Avoiding,defense,5,--,--,1,source=StrategyWiki Cards; source_type=Avoid; power_effect=Avoid Beam; gs_code=01026fCE
