@@ -1,0 +1,22 @@
+# Local/private ROMs and related binary artifacts
+*.gb
+*.gbc
+*.sav
+*.srm
+*.state
+*.sgm
+*.bess
+*.ram
+*.bin
+baserom.gbc
+patched/
+
+# Python/cache noise
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Editor/OS noise
+.codex
+.DS_Store
+Thumbs.db
