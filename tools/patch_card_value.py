@@ -11,6 +11,8 @@ from common import read_rom, sha1, sha256
 
 
 PATCHED_DIR = Path("patched")
+HEADER_CHECKSUM_OFFSET = 0x014D
+GLOBAL_CHECKSUM_OFFSET = 0x014E
 
 
 def parse_int(raw_value: str, field_name: str) -> int:
@@ -31,7 +33,38 @@ def parse_args() -> argparse.Namespace:
         help="Patched ROM output path. Must be under patched/. Defaults to patched/<rom>_patch_<offset>_<value>.<ext>",
     )
     parser.add_argument("--force", action="store_true", help="Overwrite an existing patched output file")
+    parser.add_argument(
+        "--no-fix-checksums",
+        action="store_true",
+        help="Do not update Game Boy header/global checksum fields after patching",
+    )
     return parser.parse_args()
+
+
+def header_checksum(data: bytes | bytearray) -> int:
+    checksum = 0
+    for byte in data[0x0134:0x014D]:
+        checksum = (checksum - byte - 1) & 0xFF
+    return checksum
+
+
+def global_checksum(data: bytes | bytearray) -> int:
+    total = 0
+    for index, byte in enumerate(data):
+        if index in (GLOBAL_CHECKSUM_OFFSET, GLOBAL_CHECKSUM_OFFSET + 1):
+            continue
+        total = (total + byte) & 0xFFFF
+    return total
+
+
+def fix_checksums(data: bytearray) -> tuple[int, int, int, int]:
+    old_header = data[HEADER_CHECKSUM_OFFSET]
+    old_global = int.from_bytes(data[GLOBAL_CHECKSUM_OFFSET : GLOBAL_CHECKSUM_OFFSET + 2], byteorder="big")
+    new_header = header_checksum(data)
+    data[HEADER_CHECKSUM_OFFSET] = new_header
+    new_global = global_checksum(data)
+    data[GLOBAL_CHECKSUM_OFFSET : GLOBAL_CHECKSUM_OFFSET + 2] = new_global.to_bytes(2, byteorder="big")
+    return old_header, new_header, old_global, new_global
 
 
 def default_output_path(input_path: Path, offset: int, value: int) -> Path:
@@ -87,6 +120,9 @@ def main() -> int:
 
     old_value = data[offset]
     data[offset] = value
+    checksum_update = None
+    if not args.no_fix_checksums:
+        checksum_update = fix_checksums(data)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_bytes(data)
     patched = bytes(data)
@@ -96,6 +132,12 @@ def main() -> int:
     print(f"offset: 0x{offset:06X}")
     print(f"old_value: 0x{old_value:02X} ({old_value})")
     print(f"new_value: 0x{value:02X} ({value})")
+    if checksum_update is not None:
+        old_header, new_header, old_global, new_global = checksum_update
+        print(f"header_checksum: 0x{old_header:02X} -> 0x{new_header:02X}")
+        print(f"global_checksum: 0x{old_global:04X} -> 0x{new_global:04X}")
+    else:
+        print("checksum_update: disabled")
     print(f"sha1: {sha1(patched)}")
     print(f"sha256: {sha256(patched)}")
     return 0
