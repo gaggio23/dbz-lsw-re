@@ -10,6 +10,7 @@
 *.bin
 baserom.gbc
 patched/
+local_saves/
 
 # Python/cache noise
 __pycache__/

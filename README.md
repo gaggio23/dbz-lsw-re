@@ -37,11 +37,13 @@ Character statistics are part of the project purpose, but they have not been ext
 ├── notes/
 │   ├── card_tables.md
 │   ├── feint_precision.md
-│   └── methodology.md
+│   ├── methodology.md
+│   └── save_editing.md
 └── tools/
     ├── common.py
     ├── import_strategywiki_cards.py
     ├── patch_card_value.py
+    ├── patch_save_card_count.py
     ├── rom_info.py
     └── scan_card_tables.py
 ```
@@ -80,6 +82,8 @@ Field meaning:
 [notes/card_tables.md](notes/card_tables.md) documents the card CSV schema, scanner assumptions, current candidate offsets, and the BGB validation workflow.
 
 [notes/feint_precision.md](notes/feint_precision.md) stores focused notes for the `Feint` card and precision-related behavior.
+
+[notes/save_editing.md](notes/save_editing.md) documents the SRAM card-count array and save patching workflow.
 
 ## Tools
 
@@ -120,6 +124,14 @@ python3 tools/patch_card_value.py baserom.gbc 0x0443E4 0x16
 
 This changes the current candidate byte for card 13 `cc` from `23` to `22` in a copied ROM. If the candidate is correct, the patched ROM should show `S.Kamehameha` with CC `22` instead of `23`.
 
+[tools/patch_save_card_count.py](tools/patch_save_card_count.py) patches one owned-card count in a copied SRAM save under `local_saves/patched/`. Current save research found the card-count array at SRAM offset `0x037E`.
+
+Example: set card 94 (`Dabura`) to 3 copies:
+
+```sh
+python3 tools/patch_save_card_count.py local_saves/original/dbzlsw_after_23.srm 94 3
+```
+
 ## Make Targets
 
 ```sh
@@ -127,6 +139,7 @@ make rom-info
 make scan-card-tables
 make import-strategywiki-cards
 make patch-byte-example PATCH_OFFSET=0x0443E4 PATCH_VALUE=0x16
+make patch-save-card SAVE=local_saves/original/dbzlsw_after_23.srm CARD=94 COUNT=3
 make clean
 ```
 
